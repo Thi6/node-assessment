@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const item = require("../models/item");
 const validate = require("../validation/item");
-
+const User = require("../models/user");
 
 
 
@@ -12,7 +12,7 @@ const validate = require("../validation/item");
 // access Public
 router.get("/getAll", (req, res) => {
     const errors = {};
-    item.find({}, '-password -__v')
+    item.find({}, '-_id -password -__v')
         .then(items => {
             res.json(items);
         })
@@ -25,14 +25,9 @@ router.get("/getAll", (req, res) => {
 // access Public
 router.post("/addItem", (req, res) => {
 
-    const validateItem = validate(req.body);
 
-    if (!validateItem.isValid) {
-      return res.status(400).json(validateItem.errors);
-    }
-
-    item.findOne({ username: req.body.username })
-        .then(item => {
+    User.findOne({ username: req.body.username })
+        .then(user => {
 
             bcrypt.compare(req.body.password, user.password)
                 .then(isMatch => {
