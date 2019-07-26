@@ -25,7 +25,7 @@ let userSchema = new Schema({
 });
 
 //Apply the uniqueValidator plugin to userSchema
-userSchema.plugin(uniqueValidator);
+userSchema.plugin(uniqueValidator, { message: 'Error, expected {PATH} to be unique.' });
 
 //create user model from the schema
 let User = mongoose.model('users', userSchema);
