@@ -24,10 +24,12 @@ router.get("/getAll", (req, res) => {
 router.post("/register", (req, res) => {
     const validateUser = validate(req.body);
 
+    //
     if (!validateUser.isValid) {
         return res.status(400).json(validateUser.errors);
     }
 
+    //new user
     const myUser = new User({
         username: req.body.username,
         email: req.body.email,
@@ -35,9 +37,7 @@ router.post("/register", (req, res) => {
         passwordCheck: req.body.passwordCheck
     });
 
-    
-
-
+    //hashes password
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(myUser.password, salt, (err, hash) => {
             if (err) throw err;

@@ -1,5 +1,6 @@
 const Validator = require("validator");
 const isEmpty = require("./isEmpty");
+const uniqueValidator = require("mongoose-unique-validator");
 
 module.exports = function validateUser(data) {
 
@@ -10,7 +11,7 @@ data.email = !isEmpty(data.email) ? data.email : "";
 data.password = !isEmpty(data.password) ? data.password : "";
 data.passwordCheck = !isEmpty(data.passwordCheck) ? data.passwordCheck : "";
 
-//item validation rules
+//user validation rules
 if (!Validator.isAlphanumeric(data.username)) {
     errors.username = "Username field is invalid, must only include numbers and letters";
 }
