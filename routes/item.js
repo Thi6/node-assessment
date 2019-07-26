@@ -33,8 +33,8 @@ router.post("/addItem", (req, res) => {
                 .then(isMatch => {
 
                     if (isMatch) {
-             
-                        const myItem = new item ({
+
+                        const myItem = new item({
                             username: req.body.username,
                             password: req.body.password,
                             content: req.body.content
@@ -47,7 +47,7 @@ router.post("/addItem", (req, res) => {
                         return res.status(400).json(errors);
                     }
 
-                })
+                });
 
 
         })
@@ -97,18 +97,15 @@ router.put("/updateItem", (req, res) => {
 // access Public
 router.delete("/deleteItem", (req, res) => {
 
-    let errors = {};
+    User.findOne({ username: req.body.username })
+        .then(user => {
 
-    const password = req.body.password;
-    const username = req.body.username;
-
-    item.findById(username)
-        .then(item => {
-            bcrypt.compare(password, item.password)
+            bcrypt.compare(req.body.password, user.password)
                 .then(isMatch => {
+
                     if (isMatch) {
                         //remove item
-                        item.deleteOne({ username })
+                        item.deleteOne({ username:req.nody.username })
                             .then(() =>
                                 res.status(200).send("successfully deleted item"))
                             .catch(err => res.status(404).json({ itemNotFound: "Item not found" }))
@@ -121,7 +118,9 @@ router.delete("/deleteItem", (req, res) => {
 
 
         })
-        .catch(err => res.status(404).json({ notAnItem: "This is not an item" }))
+        .catch(err => res.status(404).json({ notAnItem: "This is not an item" }));
+
+
 
 });
 
