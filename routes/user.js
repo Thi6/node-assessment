@@ -44,9 +44,9 @@ router.post("/register", (req, res) => {
             myUser.password = hash;
             myUser.save()
                 .then(() => res.send("successfully registered"))
-                .catch(err => res.status(404).json(err));
+                .catch(err => res.status(404).send("username or email already exists"));
         });
-    })
+    });
 
 
 });
@@ -64,7 +64,6 @@ router.post("/login", (req, res) => {
         .then(user => {
 
 
-            // compare passwords
             bcrypt.compare(password, user.password)
             .then(isMatch => {
                 
