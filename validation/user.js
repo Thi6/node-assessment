@@ -8,6 +8,7 @@ let errors = {};
 data.username = !isEmpty(data.username) ? data.username : "";
 data.email = !isEmpty(data.email) ? data.email : "";
 data.password = !isEmpty(data.password) ? data.password : "";
+data.passwordCheck = !isEmpty(data.passwordCheck) ? data.passwordCheck : "";
 
 //item validation rules
 if (!Validator.isAlphanumeric(data.username)) {
@@ -24,6 +25,10 @@ if (!Validator.isEmail(data.email)) {
 
 if (Validator.isEmpty(data.email)) {
     errors.email = "Email field is required";
+}
+
+if (!Validator.equals(data.password, data.passwordCheck)) {
+    errors.password = "Passwords do not match";
 }
 
 if (Validator.isEmpty(data.password)) {

@@ -13,7 +13,12 @@ let userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    passwordCheck: {
+        type: String,
+        required: true
     }
+
 });
 
 //create user model from the schema

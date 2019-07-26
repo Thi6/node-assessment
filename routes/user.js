@@ -31,7 +31,8 @@ router.post("/register", (req, res) => {
     const myUser = new User({
         username: req.body.username,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        passwordCheck: req.body.passwordcheck
     });
 
     bcrypt.genSalt(10, (err, salt) => {
@@ -53,19 +54,22 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
     let errors = {};
     const username = req.body.username;
+    const email = req.body.email;
     const password = req.body.password;
 
-
-
-    User.find(username)
+    User.findOne({username})
         .then(user => {
+
+
+
+
             // compare passwords
             bcrypt.compare(password, user.password)
             .then(isMatch => {
                 
                 if (isMatch) {
                     //login successful
-                    res.status(200).json({success: "Login successful"});
+                    res.json({success: "Login successful"});
                 } else {
                     errors.password = "Incorrect password";
                     return res.status(400).json(errors);
