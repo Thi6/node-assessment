@@ -32,8 +32,11 @@ router.post("/register", (req, res) => {
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
-        passwordCheck: req.body.passwordcheck
+        passwordCheck: req.body.passwordCheck
     });
+
+    
+
 
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(myUser.password, salt, (err, hash) => {
@@ -59,8 +62,6 @@ router.post("/login", (req, res) => {
 
     User.findOne({username})
         .then(user => {
-
-
 
 
             // compare passwords
